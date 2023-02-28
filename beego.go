@@ -24,7 +24,7 @@ import (
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/otel/trace"
 
-	"github.com/beego/beego"
+	beego "github.com/beego/beego/v2/server/web"
 )
 
 // Handler implements the http.Handler interface and provides
@@ -60,11 +60,11 @@ func defaultSpanNameFormatter(_ string, req *http.Request) string {
 	return req.Method
 }
 
-// NewOTelBeegoMiddleWare creates a MiddleWare that provides OpenTelemetry
+// MiddleWare creates a MiddleWare that provides OpenTelemetry
 // tracing and metrics to a Beego web app.
 // Parameter service should describe the name of the (virtual) server handling the request.
 // The OTelBeegoMiddleWare can be configured using the provided Options.
-func NewOTelBeegoMiddleWare(service string, options ...Option) beego.MiddleWare {
+func MiddleWare(service string, options ...Option) beego.MiddleWare {
 	cfg := newConfig(options...)
 
 	httpOptions := []otelhttp.Option{
